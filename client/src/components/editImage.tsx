@@ -2,29 +2,26 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 interface EditProps {
-  file: File | null;
   preview: string;
   setPreview: (value: string) => void;
   uuid: string;
 }
 
-const EditImage = ({ file, setPreview, uuid }: EditProps) => {
+const EditImage = ({ setPreview, uuid }: EditProps) => {
   const [brightness, setBrightness] = useState(1);
   const [contrastLow, setContrastLow] = useState(1);
   const [contrastHigh, setContrastHigh] = useState(2);
   const [saturation, setSaturation] = useState(1);
   const [rotate, setRotate] = useState(0);
-  // const [hue, setHue] = useState(180);
+  const [hue, setHue] = useState(90);
   const [format, setFormat] = useState("jpeg");
   const [downloadUrl, setDownloadUrl] = useState("");
 
   const editImage = async () => {
-    if (!file) return;
-
     const formData = new FormData();
     formData.append("uuid", uuid);
     formData.append("brightness", brightness.toString());
-    // formData.append("hue", hue.toString());
+    formData.append("hue", hue.toString());
     formData.append("saturation", saturation.toString());
     formData.append("contrastLow", contrastLow.toString());
     formData.append("contrastHigh", contrastHigh.toString());
@@ -32,8 +29,16 @@ const EditImage = ({ file, setPreview, uuid }: EditProps) => {
     formData.append("rotate", rotate.toString());
 
     console.log(formData);
+
+    interface EditImageResponse {
+      message: string;
+      preview: string;
+      path: string;
+      downloadPath: string;
+    }
+
     try {
-      const response = await axios.post(
+      const response = await axios.post<EditImageResponse>(
         "http://localhost:5000/api/edit",
         formData,
         {
@@ -61,6 +66,8 @@ const EditImage = ({ file, setPreview, uuid }: EditProps) => {
     <div className="container" id="editer-container">
       <div className="form-holder">
         <label>Brightness</label>
+        <p>{brightness}</p>
+
         <input
           type="range"
           min="0.5"
@@ -83,27 +90,34 @@ const EditImage = ({ file, setPreview, uuid }: EditProps) => {
       </div> */}
       <div className="form-holder" id="contrast-holder">
         <label>contrast</label>
-        <div>
-          <input
-            type="range"
-            min="0"
-            max="99"
-            step="2"
-            value={contrastLow}
-            onChange={(e) => setContrastLow(parseFloat(e.target.value))}
-          />
-          <input
-            type="range"
-            min="1"
-            max="100"
-            step="2"
-            value={contrastHigh}
-            onChange={(e) => setContrastHigh(parseFloat(e.target.value))}
-          />
+        <div style={{ display: "flex" }}>
+          <div className="contrast-input">
+            <input
+              type="range"
+              min="0"
+              max="99"
+              step="2"
+              value={contrastLow}
+              onChange={(e) => setContrastLow(parseFloat(e.target.value))}
+            />
+            <p>Lower Value</p>
+          </div>
+          <div className="contrast-input">
+            <input
+              type="range"
+              min="1"
+              max="100"
+              step="2"
+              value={contrastHigh}
+              onChange={(e) => setContrastHigh(parseFloat(e.target.value))}
+            />
+            <p>Higher Value</p>
+          </div>
         </div>
       </div>
       <div className="form-holder">
         <label>Saturation</label>
+        <p> {saturation}</p>
         <input
           type="range"
           min="0.5"
@@ -114,11 +128,13 @@ const EditImage = ({ file, setPreview, uuid }: EditProps) => {
         />
       </div>
       <div className="form-holder">
-        <label>Rotate</label>
+        <label>Rotation</label>
+        <p>{rotate} deg</p>
         <input
-          type="number"
+          type="range"
           min="0"
           max="360"
+          step={1}
           value={rotate}
           onChange={(e) => setRotate(parseInt(e.target.value))}
         />

@@ -138,12 +138,26 @@ img {
 
 .form-holder input,
 select {
-  width: 300px;
+  width: 250px;
   text-align: center;
 }
 
 #contrast-holder input {
-  width: 150px;
+  width: 124px;
+}
+
+.contrast-input {
+  /* background-color: red; */
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  /* background-color: gray; */
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  border-bottom: 1px solid gray;
 }
 
 .download-btn {

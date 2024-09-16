@@ -105,6 +105,7 @@ export const editController = async (req, res) => {
       .modulate({
         brightness: Number(body.brightness),
         saturation: Number(body.saturation),
+        // lightness: Number(body.hue),
       })
       .normalise({
         lower: Number(body.contrastLow),

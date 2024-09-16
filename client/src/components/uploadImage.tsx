@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import EditImage from "./editImage";
 
 export const UploadImage = () => {
-  const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
   const [uuid, setUuid] = useState("");
 
   const fileChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+      // setFile(e.target.files[0]);
+      uploadFile(e.target.files[0]);
     }
     hideEdit();
   };
@@ -65,14 +65,21 @@ export const UploadImage = () => {
     }
   };
 
-  const uploadFile = async () => {
+  interface UploadResponse {
+    message: string;
+    preview: string;
+    path: string;
+    uuid: string;
+  }
+
+  const uploadFile = async (file: File) => {
     if (file) {
       const formData = new FormData();
       formData.append("image", file);
 
       console.log(formData);
       try {
-        const response = await axios.post(
+        const response = await axios.post<UploadResponse>(
           "http://localhost:5000/api/upload",
           formData,
           {
@@ -105,7 +112,6 @@ export const UploadImage = () => {
           onClick={getHome}
           onChange={(e) => fileChanged(e)}
         />
-        <button onClick={uploadFile}>Upload Image</button>
       </div>
       <div id="uploader-back">
         <h2>Upload another Image for Edit</h2>
@@ -113,12 +119,7 @@ export const UploadImage = () => {
       </div>
 
       <img id="first-preview" src={preview} alt="Preview"></img>
-      <EditImage
-        file={file}
-        preview={preview}
-        setPreview={setPreview}
-        uuid={uuid}
-      />
+      <EditImage preview={preview} setPreview={setPreview} uuid={uuid} />
     </div>
   );
 };
