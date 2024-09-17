@@ -10,23 +10,23 @@ const server = express();
 //   cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200 })
 // );
 
-server.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: [
-          "'self'",
-          "https://image-processor-b2u8.onrender.com",
-          "data:",
-        ],
-        connectSrc: ["'self'", "https://image-processor-b2u8.onrender.com"],
-      },
-    },
-  })
-);
+// server.use(
+//   helmet({
+//     contentSecurityPolicy: {
+//       directives: {
+//         defaultSrc: ["'self'"],
+//         scriptSrc: ["'self'", "'unsafe-inline'"],
+//         styleSrc: ["'self'", "'unsafe-inline'"],
+//         imgSrc: [
+//           "'self'",
+//           "https://image-processor-b2u8.onrender.com",
+//           "data:",
+//         ],
+//         connectSrc: ["'self'", "https://image-processor-b2u8.onrender.com"],
+//       },
+//     },
+//   })
+// );
 
 server.use(
   cors({
