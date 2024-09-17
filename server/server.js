@@ -9,6 +9,14 @@ const server = express();
 //   cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200 })
 // );
 
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://image-processor-b2u8.onrender.com"
+  );
+  next();
+});
+
 server.use(
   cors({
     origin: "https://image-processor.vercel.app",
