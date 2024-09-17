@@ -9,7 +9,7 @@ const server = express();
 //   cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200 })
 // );
 
-app.use(
+server.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
