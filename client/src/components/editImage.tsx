@@ -38,8 +38,17 @@ const EditImage = ({ setPreview, uuid }: EditProps) => {
     }
 
     try {
+      // const response = await axios.post<EditImageResponse>(
+      //   "http://localhost:5000/api/edit",
+      //   formData,
+      //   {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //     },
+      //   }
+      // );
       const response = await axios.post<EditImageResponse>(
-        "http://localhost:5000/api/edit",
+        `${process.env.REACT_APP_API_URL}/api/edit`,
         formData,
         {
           headers: {
@@ -48,7 +57,9 @@ const EditImage = ({ setPreview, uuid }: EditProps) => {
         }
       );
       setPreview(response.data.preview);
-      const downloadUrl = `http://localhost:5000/api${response.data.downloadPath}`;
+      // const downloadUrl = `http://localhost:5000/api${response.data.downloadPath}`;
+      const downloadUrl = `${process.env.REACT_APP_API_URL}/api${response.data.downloadPath}`;
+
       // Store the download URL for use
       setDownloadUrl(downloadUrl);
     } catch (error) {

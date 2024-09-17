@@ -6,6 +6,9 @@ export const UploadImage = () => {
   const [preview, setPreview] = useState("");
   const [uuid, setUuid] = useState("");
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+  console.log("apiUrl ", apiUrl);
+
   const fileChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       // setFile(e.target.files[0]);
@@ -79,8 +82,17 @@ export const UploadImage = () => {
 
       console.log(formData);
       try {
+        // const response = await axios.post<UploadResponse>(
+        //   "http://localhost:5000/api/upload",
+        //   formData,
+        //   {
+        //     headers: {
+        //       "Content-Type": "multipart/form-data",
+        //     },
+        //   }
+        // );
         const response = await axios.post<UploadResponse>(
-          "http://localhost:5000/api/upload",
+          `${process.env.REACT_APP_API_URL}/api/upload`,
           formData,
           {
             headers: {
