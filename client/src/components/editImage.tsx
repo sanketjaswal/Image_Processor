@@ -48,7 +48,7 @@ const EditImage = ({ setPreview, uuid }: EditProps) => {
       //   }
       // );
       const response = await axios.post<EditImageResponse>(
-        `${process.env.REACT_APP_API_URL}/api/edit`,
+        "${process.env.REACT_APP_API_URL}/api/edit",
         formData,
         {
           headers: {
