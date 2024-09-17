@@ -11,8 +11,11 @@ const server = express();
 
 server.use(
   cors({
-    origin: "https://image-processor-b2u8.onrender.com",
+    origin:
+      "https://image-processor-lzecymc9r-sanketjaswals-projects.vercel.app",
     optionsSuccessStatus: 200,
+    methods: ["GET", "POST"],
+    credentials: true,
   })
 );
 
