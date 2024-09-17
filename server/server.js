@@ -9,13 +9,19 @@ const server = express();
 //   cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200 })
 // );
 
-server.use((req, res, next) => {
-  res.setHeader(
-    "Content-Security-Policy",
-    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://image-processor-b2u8.onrender.com"
-  );
-  next();
-});
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", "data:"],
+        connectSrc: ["'self'", "https://image-processor-b2u8.onrender.com"],
+      },
+    },
+  })
+);
 
 server.use(
   cors({
